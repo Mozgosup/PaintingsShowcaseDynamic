@@ -68,14 +68,14 @@
         biographyWrapper.innerHTML = '';
         carouselWrapper.innerHTML = '';
 
-        fetch(`assets/data/biography_${lang}.html`)
+        fetch(`frontend/src/main/resources/static/data/biography_${lang}.html`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('biography-container').innerHTML = data;
             })
             .catch(error => console.error('Error loading biography:', error));
 
-        fetchJSON('assets/data/biography_photos.json')
+        fetchJSON('/frontend/src/main/resources/static/data/biography_photos.json')
             .then(photos => {
                 photos.forEach(photo => {
                     const img = document.createElement('img');
@@ -99,13 +99,13 @@
 
     function loadLanguage(lang) {
         Promise.all([
-            fetchJSON(`assets/data/${lang}.json`)
+            fetchJSON(`/frontend/frontend/src/main/resources/static/data/${lang}.json`)
                 .then(data => {
                     applyTranslations(data);
                     setActiveLanguageClass(lang);
                     currentLanguage = lang;
                 }),
-            fetchJSON('assets/data/paintings.json')
+            fetchJSON('/frontend/frontend/src/main/resources/static/data/paintings.json')
                 .then(populateGallery)
         ])
             .then(() => loadBiography(lang))
