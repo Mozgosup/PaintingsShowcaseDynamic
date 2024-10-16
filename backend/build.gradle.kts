@@ -22,7 +22,9 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 
 	// AWS SDK for S3
-	implementation("com.amazonaws:aws-java-sdk-s3:1.12.773")
+	implementation("software.amazon.awssdk:s3:2.28.21")
+	implementation("software.amazon.awssdk:auth:2.28.21")
+	implementation("software.amazon.awssdk:core:2.28.21")
 
 	// Dev and test dependencies
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
