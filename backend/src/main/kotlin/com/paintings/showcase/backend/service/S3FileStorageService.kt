@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.S3Client
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest
 import software.amazon.awssdk.services.s3.model.PutObjectRequest
-import java.io.IOException
 import java.util.*
 
 
@@ -16,7 +16,6 @@ class S3FileStorageService(
     @Value("\${aws.s3.bucket-name}") private val bucketName: String
 ) : FileStorageService {
 
-    @Throws(IOException::class)
     override fun uploadFile(file: MultipartFile): String {
 
         val fileName = UUID.randomUUID().toString() + "-" + file.originalFilename
@@ -35,5 +34,18 @@ class S3FileStorageService(
             builder.bucket(bucketName).key(fileName)
         }.toExternalForm()
 
+    }
+
+    override fun deleteFile(fileUrl: String) {
+        val fileName = extractFileNameFromUrl(fileUrl)
+        val deleteRequest = DeleteObjectRequest.builder()
+            .bucket(bucketName)
+            .key(fileName)
+            .build()
+        s3Client.deleteObject(deleteRequest)
+    }
+
+    private fun extractFileNameFromUrl(fileUrl: String): String {
+        return fileUrl.substringAfterLast("/")
     }
 }
