@@ -49,7 +49,7 @@ kotlin {
 }
 
 springBoot {
-	mainClass.set("com.paintings.showcase.Application")
+	mainClass.set("com.paintings.showcase.backend.BackendApplicationKt")
 }
 
 tasks.withType<Test> {

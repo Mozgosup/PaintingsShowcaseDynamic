@@ -38,3 +38,8 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+### Docker ###
+docker-compose.override.yml
+*.env
+*.log
