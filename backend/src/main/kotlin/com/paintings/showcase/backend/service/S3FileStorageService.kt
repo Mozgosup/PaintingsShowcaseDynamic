@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.S3Client
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Request
 import software.amazon.awssdk.services.s3.model.PutObjectRequest
 import java.util.*
 
@@ -43,6 +44,22 @@ class S3FileStorageService(
             .key(fileName)
             .build()
         s3Client.deleteObject(deleteRequest)
+    }
+
+    override fun listFilesInFolder(folder: String): List<String> {
+        val listObjectsRequest = ListObjectsV2Request.builder()
+            .bucket(bucketName)
+            .prefix(folder)
+            .build()
+
+        val response = s3Client.listObjectsV2(listObjectsRequest)
+        return response.contents().map { it.key() } // Возвращаем ключи (путь к файлу внутри бакета)
+    }
+
+    override fun getFileUrl(fileKey: String): String {
+        return s3Client.utilities().getUrl { builder ->
+            builder.bucket(bucketName).key(fileKey)
+        }.toExternalForm()
     }
 
     private fun extractFileNameFromUrl(fileUrl: String): String {
