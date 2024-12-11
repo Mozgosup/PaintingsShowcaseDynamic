@@ -53,7 +53,8 @@ class S3FileStorageService(
             .build()
 
         val response = s3Client.listObjectsV2(listObjectsRequest)
-        return response.contents().map { it.key() } // Возвращаем ключи (путь к файлу внутри бакета)
+
+        return response.contents().map { it.key() }
     }
 
     override fun getFileUrl(fileKey: String): String {

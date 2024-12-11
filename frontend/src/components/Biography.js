@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { API_URL } from '../config';
 
 const Biography = () => {
     const { t } = useTranslation();
@@ -11,7 +10,7 @@ const Biography = () => {
         const loadImages = async () => {
             try {
                 console.log('Fetching images...');
-                const response = await fetch(`${API_URL}/api/biography/images`);
+                const response = await fetch(`/api/biography/images`);
                 if (!response.ok) {
                     throw new Error(`Failed to fetch images: ${response.statusText}`);
                 }
