@@ -10,13 +10,12 @@ const Biography = () => {
         const loadImages = async () => {
             try {
                 console.log('Fetching images...');
-                const response = await fetch(`/api/biography/images`);
+                const response = await fetch('/api/biography/images');
                 if (!response.ok) {
                     throw new Error(`Failed to fetch images: ${response.statusText}`);
                 }
                 const data = await response.json();
 
-                // Validate response structure
                 if (Array.isArray(data)) {
                     setImages(data);
                 } else {
@@ -32,7 +31,12 @@ const Biography = () => {
         loadImages();
     }, []);
 
-    const tocEntries = t('bio.table_of_contents', { returnObjects: true }) || [];
+    const title = t('bio.title');
+    const introduction = t('bio.introduction');
+
+    const tableOfContents = t('bio.table_of_contents', { returnObjects: true }) || [];
+    const tableOfContentsTitle = t('bio.table_of_contents_title', 'Table of Contents');
+
     const chapters = t('bio.chapters', { returnObjects: true }) || [];
 
     if (loading) {
@@ -41,8 +45,8 @@ const Biography = () => {
 
     return (
         <div className="biography">
-            <h1>{t('bio.title', 'Biography')}</h1>
-            <p>{t('bio.introduction')}</p>
+            <h1>{title}</h1>
+            <p>{introduction}</p>
 
             {/* Images gallery */}
             {images.length > 0 ? (
@@ -56,10 +60,10 @@ const Biography = () => {
             )}
 
             {/* Table of Contents */}
-            <h2>{t('bio.table_of_contents.title', 'Table of Contents')}</h2>
+            <h2>{tableOfContentsTitle}</h2>
             <ul>
-                {Array.isArray(tocEntries) && tocEntries.length > 0 ? (
-                    tocEntries.map((entry, index) => (
+                {Array.isArray(tableOfContents) && tableOfContents.length > 0 ? (
+                    tableOfContents.map((entry, index) => (
                         <li key={index}>
                             <a href={`#${entry.id}`}>{entry.title}</a>
                         </li>
@@ -74,33 +78,31 @@ const Biography = () => {
                 chapters.map((chapter, index) => (
                     <div key={index} id={chapter.id}>
                         <h2>{chapter.title}</h2>
-                        {Array.isArray(chapter.content) &&
-                            chapter.content.map((paragraph, pIndex) => (
-                                <p key={pIndex}>{paragraph}</p>
-                            ))}
+                        {/* Paragraphs */}
+                        {Array.isArray(chapter.paragraphs) && chapter.paragraphs.map((p, pIndex) => (
+                            <p key={pIndex}>{p}</p>
+                        ))}
+
+                        {/* Links */}
+                        {Array.isArray(chapter.links) && chapter.links.length > 0 && (
+                            <>
+                                <h3>{chapter.links_title || 'Links'}</h3>
+                                <ul>
+                                    {chapter.links.map((link, lIndex) => (
+                                        <li key={lIndex}>
+                                            <strong>{link.label}</strong> - {link.description} -{' '}
+                                            <a href={link.url} target="_blank" rel="noopener noreferrer">
+                                                {link.url}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </>
+                        )}
                     </div>
                 ))
             ) : (
                 <p>No chapters available</p>
-            )}
-
-            {/* Links */}
-            {Array.isArray(chapters) && chapters.some(ch => ch.id === 'chapter3') && (
-                <div>
-                    <h2>{chapters.find(ch => ch.id === 'chapter3').title}</h2>
-                    <ul>
-                        {chapters
-                            .find(ch => ch.id === 'chapter3')
-                            .content.map((link, index) => (
-                                <li key={index}>
-                                    <strong>{link.label}</strong> - {link.description} -{' '}
-                                    <a href={link.url} target="_blank" rel="noopener noreferrer">
-                                        {link.url}
-                                    </a>
-                                </li>
-                            ))}
-                    </ul>
-                </div>
             )}
         </div>
     );
