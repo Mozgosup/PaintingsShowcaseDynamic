@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {Swiper, SwiperSlide} from 'swiper/react';
+import {Mousewheel} from 'swiper/modules';
+import 'swiper/css';
 
 const Biography = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const [images, setImages] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -34,10 +37,10 @@ const Biography = () => {
     const title = t('bio.title');
     const introduction = t('bio.introduction');
 
-    const tableOfContents = t('bio.table_of_contents', { returnObjects: true }) || [];
+    const tableOfContents = t('bio.table_of_contents', {returnObjects: true}) || [];
     const tableOfContentsTitle = t('bio.table_of_contents_title', 'Table of Contents');
 
-    const chapters = t('bio.chapters', { returnObjects: true }) || [];
+    const chapters = t('bio.chapters', {returnObjects: true}) || [];
 
     if (loading) {
         return <div>Loading...</div>;
@@ -48,13 +51,42 @@ const Biography = () => {
             <h1>{title}</h1>
             <p>{introduction}</p>
 
-            {/* Images gallery */}
+            {/* Images loop */}
             {images.length > 0 ? (
-                <div className="images-gallery">
+                <Swiper
+                    modules={[Mousewheel]}
+                    loop={true}
+                    mousewheel={true}
+                    grabCursor={true}
+                    spaceBetween={10}
+                    slidesPerGroup={1}
+                    loopAdditionalSlides={3}
+                    slidesPerView="auto"
+                    style={{width: '100%', height: '400px'}}
+                >
                     {images.map((img, index) => (
-                        <img key={index} src={img.url} alt={img.alt || `Image ${index + 1}`} />
+                        <SwiperSlide
+                            key={index}
+                            style={{
+                                width: 'auto',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <img
+                                src={img.url}
+                                alt={img.alt || `Image ${index + 1}`}
+                                style={{
+                                    height: '100%',
+                                    width: '100%',
+                                    objectFit: 'cover',
+                                    display: 'block'
+                                }}
+                            />
+                        </SwiperSlide>
                     ))}
-                </div>
+                </Swiper>
             ) : (
                 <p>No images available</p>
             )}

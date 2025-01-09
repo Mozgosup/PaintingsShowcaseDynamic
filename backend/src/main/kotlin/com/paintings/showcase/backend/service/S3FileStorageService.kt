@@ -54,7 +54,13 @@ class S3FileStorageService(
 
         val response = s3Client.listObjectsV2(listObjectsRequest)
 
-        return response.contents().map { it.key() }
+        val allKeys = response.contents().map { it.key() }
+
+        val fileKeys = allKeys.filter { key ->
+            !key.endsWith("/")
+        }
+
+        return fileKeys
     }
 
     override fun getFileUrl(fileKey: String): String {
