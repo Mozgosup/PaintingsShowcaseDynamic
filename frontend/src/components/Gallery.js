@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Artwork from './Artwork';
+import ImageModal from './ImageModal';
 
-function Gallery() {
+function Gallery({ paintings }) {
+    const [selectedPainting, setSelectedPainting] = useState(null);
+
+    const openModal = (painting) => setSelectedPainting(painting);
+    const closeModal = () => setSelectedPainting(null);
+
     return (
-        <div id="gallery">
-            {/* Gallery content will go here */}
+        <div>
+            <div id="gallery">
+                {paintings.map((p, i) => (
+                    <Artwork key={i} painting={p} openModal={openModal} />
+                ))}
+            </div>
+            <ImageModal painting={selectedPainting} onClose={closeModal} />
         </div>
     );
 }

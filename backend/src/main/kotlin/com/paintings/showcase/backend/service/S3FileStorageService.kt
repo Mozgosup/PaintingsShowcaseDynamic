@@ -19,7 +19,7 @@ class S3FileStorageService(
 
     override fun uploadFile(file: MultipartFile): String {
 
-        val fileName = UUID.randomUUID().toString() + "-" + file.originalFilename
+        val fileName = "paintings/" + UUID.randomUUID().toString() + "-" + file.originalFilename
 
         val putObjectRequest = PutObjectRequest.builder()
             .bucket(bucketName)
@@ -34,7 +34,6 @@ class S3FileStorageService(
         return s3Client.utilities().getUrl { builder ->
             builder.bucket(bucketName).key(fileName)
         }.toExternalForm()
-
     }
 
     override fun deleteFile(fileUrl: String) {
@@ -54,7 +53,13 @@ class S3FileStorageService(
 
         val response = s3Client.listObjectsV2(listObjectsRequest)
 
-        return response.contents().map { it.key() }
+        val allKeys = response.contents().map { it.key() }
+
+        val fileKeys = allKeys.filter { key ->
+            !key.endsWith("/")
+        }
+
+        return fileKeys
     }
 
     override fun getFileUrl(fileKey: String): String {
