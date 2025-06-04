@@ -116,11 +116,24 @@ body {
   font-size: 1.1em;
 }
 
-/* Gallery */
+/* Gallery styles */
 #gallery {
   align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
+  /*opacity: 0; !* Начальное состояние - скрыто *!*/
+  /*transition: opacity 0.5s ease-in-out;*/
+}
+
+#gallery.loaded {
+  opacity: 1; /* Появляется после загрузки */
+}
+
+/* Artwork styles */
+#gallery {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
   transition: opacity 0.5s ease-in-out;
 }
 
@@ -129,24 +142,20 @@ body {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
 }
-
 .artwork img {
-  border-bottom: 1px solid #ccc;
   display: block;
   height: 300px;
+  width: auto;
+  /*border-bottom: 1px solid #ccc;*/
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
-  width: auto;
 }
 
-.artwork figcaption {
-  color: var(--gray-color);
-  font-family: var(--main-font);
-  font-size: 80%;
-  line-height: 1;
-  margin-top: 0;
-  padding: 0;
-  text-align: right;
+.artwork.loaded {
+  opacity: 1;
+}
+.artwork.loaded img {
+  opacity: 1; /* картинка тоже */
 }
 
 .painting-name {

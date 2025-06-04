@@ -1,9 +1,12 @@
 import React from 'react';
+import Artwork from './Artwork';
 
-function Gallery() {
+function Gallery({ paintings }) {
     return (
         <div id="gallery">
-            {/* Gallery content will go here */}
+            {paintings.map((painting, index) => (
+                <Artwork key={index} painting={painting} />
+            ))}
         </div>
     );
 }
