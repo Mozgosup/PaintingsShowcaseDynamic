@@ -1,13 +1,20 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Gallery from './Gallery';
 
 function MainContent() {
+    const [paintings, setPaintings] = useState([]);
+
+    useEffect(() => {
+        fetch('/api/paintings')
+            .then(res => res.json())
+            .then(data => setPaintings(data))
+            .catch(err => console.error('Error:', err));
+    }, []);
+
     return (
-        <div id="content">
-            <section id="home" className="content-section">
-                <h1>Featured Artworks</h1>
-                <Gallery />
-            </section>
+        <div>
+            <h1 className="gallery-title">Featured Artworks</h1>
+            <Gallery paintings={paintings}/>
         </div>
     );
 }

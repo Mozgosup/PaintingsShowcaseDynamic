@@ -108,80 +108,97 @@ body {
 }
 
 #menu a:hover,
-.active-menu-item {
+#menu a.active-menu-item {
   text-decoration: underline;
 }
 
-.active-menu-item {
+#menu a.active-menu-item {
   font-size: 1.1em;
 }
 
-/* Gallery */
+/* Gallery styles */
 #gallery {
   align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
+  padding-left: 20px;
+}
+
+#gallery.loaded {
+  opacity: 1;
+}
+
+/* Artwork styles */
+#gallery {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
   transition: opacity 0.5s ease-in-out;
+}
+
+.gallery-title {
+  margin-left: 20px;
 }
 
 .artwork {
   margin: 0 50px 16px 0;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
+  text-align: right;
 }
-
 .artwork img {
-  border-bottom: 1px solid #ccc;
   display: block;
   height: 300px;
+  width: auto;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
-  width: auto;
 }
 
-.artwork figcaption {
-  color: var(--gray-color);
-  font-family: var(--main-font);
-  font-size: 80%;
-  line-height: 1;
-  margin-top: 0;
-  padding: 0;
-  text-align: right;
+.artwork.loaded {
+  opacity: 1;
+}
+
+.artwork.loaded img {
+  opacity: 1;
 }
 
 .painting-name {
   color: var(--highlight-text-color);
-  font-size: 80%;
+  font-size: 60%;
   margin-bottom: 0;
 }
 
 .artwork p:last-child {
   color: var(--gray-color);
-  font-size: 0.8em;
+  font-size: 0.6em;
   margin-top: 4px;
 }
 
 /* Modal */
 .modal {
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: none;
-  height: 100%;
-  justify-content: center;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, .7);
   z-index: 1000;
 }
 
+.modal.show {
+  display: flex;
+}
+
 .modal-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  max-height: 90%;
-  max-width: 90%;
-  transform: translate(-50%, -50%);
+}
+
+.modal-content img {
+  max-width : 90vw;
+  max-height: 90vh;
+  width : auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
 }
 
 .close {
@@ -202,6 +219,20 @@ body {
   text-align: right;
 }
 
+.painting-info p {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.painting-info p:first-child {
+  font-weight: bold;
+}
+
+.painting-info p:last-child {
+  font-weight: normal;
+  margin-top: 4px;
+}
+
 /* Footer */
 #site-footer {
   color: #999;
@@ -209,6 +240,9 @@ body {
   text-align: center;
   width: 100%;
   padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }
 
 /* Language Switcher */
@@ -448,7 +482,7 @@ body {
   .artwork {
     width: 100%;
     max-width: 100%;
-    text-align: center;
+    text-align: right;
     margin: 0 auto 16px auto;
   }
 

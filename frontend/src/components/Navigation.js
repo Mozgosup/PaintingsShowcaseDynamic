@@ -1,18 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink  } from 'react-router-dom';
 
 function Navigation() {
+
+    const getActiveClass = ({ isActive }) => (isActive ? 'active-menu-item' : undefined);
+
     return (
         <nav id="menu">
             <ul>
                 <li id="menu-home">
-                    <Link to="/">Artworks</Link>
+                    <NavLink to="/" className={getActiveClass}>Artworks</NavLink>
                 </li>
                 <li id="menu-about">
-                    <Link to="/about">About Lidia</Link>
+                    <NavLink to="/about" className={getActiveClass}>About Lidia</NavLink>
                 </li>
                 <li id="menu-contact">
-                    <Link to="/contact">Contact</Link>
+                    <NavLink to="/contact" className={getActiveClass}>Contact</NavLink>
                 </li>
             </ul>
         </nav>
