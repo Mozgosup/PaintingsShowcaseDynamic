@@ -6,8 +6,10 @@ plugins {
     id("io.spring.dependency-management") version "1.1.6" apply false
 }
 
+val appVersion = rootProject.file("VERSION").readText().trim()
+
 group = "com.paintings.showcase"
-version = "0.0.1-SNAPSHOT"
+version = appVersion
 
 allprojects {
     repositories {
@@ -21,7 +23,7 @@ subprojects {
     apply(plugin = "io.spring.dependency-management")
 
     group = "com.paintings.showcase"
-    version = "0.0.1-SNAPSHOT"
+    version = appVersion
 
     tasks.withType<Test> {
         useJUnitPlatform()

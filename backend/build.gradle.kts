@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.paintings.showcase"
-version = "0.0.1-SNAPSHOT"
+version = rootProject.version.toString()
 
 java {
 	toolchain {

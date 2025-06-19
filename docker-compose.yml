@@ -16,6 +16,9 @@ services:
   backend:
     build:
       context: ./backend
+      args:
+        APP_VERSION: ${VERSION}
+    image: paintings_backend:${VERSION}
     container_name: paintings_backend
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/paintings_db
@@ -35,6 +38,10 @@ services:
   frontend:
     build:
       context: ./frontend
+      args:
+        APP_VERSION: ${VERSION}
+    image: paintings_frontend:${VERSION}
+    container_name: paintings_frontend
     ports:
       - "4000:80"  # 4000 is the host port, 80 is the port inside the NGINX container
     environment:
