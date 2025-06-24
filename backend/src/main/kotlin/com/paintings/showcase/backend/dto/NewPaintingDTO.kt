@@ -10,9 +10,13 @@ import org.springframework.web.multipart.MultipartFile
 
 data class NewPaintingDTO(
 
-    @field:NotBlank(message = "Name cannot be blank")
-    @field:Size(max = 100, message = "Name cannot exceed 100 characters")
-    val name: String,
+    @field:NotBlank(message = "English name cannot be blank")
+    @field:Size(max = 100, message = "English name cannot exceed 100 characters")
+    val nameEn: String,
+
+    @field:NotBlank(message = "Russian name cannot be blank")
+    @field:Size(max = 100, message = "Russian name cannot exceed 100 characters")
+    val nameRu: String,
 
     @field:Min(1900, message = "Year too far in the past")
     @field:Max(2100, message = "Year cannot be in the future")

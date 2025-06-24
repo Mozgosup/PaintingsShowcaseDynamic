@@ -14,8 +14,8 @@ i18n
         fallbackLng: 'en',
         backend: {
             loadPath: isProd
-                ? 'https://paintingsbucket-mozgosup.s3.eu-north-1.amazonaws.com/biography/text/{{lng}}/biography.json'
-                : '/locales/{{lng}}/biography.json',
+                ? 'https://paintingsbucket-mozgosup.s3.eu-north-1.amazonaws.com/biography/text/{{lng}}/translation.json'
+                : '/locales/{{lng}}/translation.json',
         },
         ns: ['translation'],
         defaultNS:

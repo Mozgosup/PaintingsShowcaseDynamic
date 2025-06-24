@@ -6,8 +6,11 @@ import jakarta.validation.constraints.Size
 
 data class PaintingUpdateDTO(
 
-    @field:Size(max = 100, message = "Name cannot exceed 255 characters")
-    val name: String?,
+    @field:Size(max = 100, message = "Name cannot exceed 100 characters")
+    val nameEn: String? = null,
+
+    @field:Size(max = 100, message = "Name cannot exceed 100 characters")
+    val nameRu: String? = null,
 
     @field:Min(1900, message = "A year too far in the past")
     @field:Max(2100, message = "Year cannot be in the future")

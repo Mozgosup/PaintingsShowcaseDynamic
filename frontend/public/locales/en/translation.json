@@ -1,0 +1,31 @@
+{
+  "header": {
+    "title": "LIDIA SKARGINA"
+  },
+  "nav": {
+    "artworks": "Artworks",
+    "about": "About Lidia",
+    "contact": "Contact"
+  },
+  "main": {
+    "featured_artworks": "Featured Artworks"
+  },
+  "contact": {
+    "title": "Contact",
+    "intro": "If you want to purchase Lydia's artworks or just have a conversation:",
+    "facebook": "Facebook",
+    "phone": "Phone",
+    "email": "Email"
+  },
+  "footer": {
+    "text": "© {{year}} Lidia Skargina. All rights reserved."
+  },
+  "loading": "Loading...",
+  "errors": {
+    "biography_failed": "Failed to load biography text.",
+    "images_failed": "Failed to load images."
+  },
+  "no_images": "No images available",
+  "no_table_of_contents": "No table of contents available",
+  "no_chapters": "No chapters available"
+}
