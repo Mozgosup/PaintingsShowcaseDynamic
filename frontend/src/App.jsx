@@ -23,16 +23,25 @@ function App() {
             <div className="content-wrapper">
                 <Header/>
                 <main id="container">
-                    <div className="lang-switcher-container">
-                        <LanguageSwitcher/>
-                    </div>
-                    <Navigation/>
-                    <Routes>
-                        <Route path="/" element={<MainContent/>}/>
-                        <Route path="/about" element={<Biography/>}/>
-                        <Route path="/contact" element={<Contact/>}/>
-                    </Routes>
+                    <aside id="menu">
+                        <Navigation />
+                    </aside>
+
+                    <div className="menu-separator" aria-hidden="true" />
+
+                    <section id="content">
+                        <div className="lang-switcher-container">
+                            <LanguageSwitcher />
+                        </div>
+
+                        <Routes>
+                            <Route path="/" element={<MainContent />} />
+                            <Route path="/about" element={<Biography />} />
+                            <Route path="/contact" element={<Contact />} />
+                        </Routes>
+                    </section>
                 </main>
+
                 <Footer/>
             </div>
         </Router>
