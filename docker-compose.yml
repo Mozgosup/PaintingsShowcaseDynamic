@@ -9,7 +9,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5433:5432"
     networks:
       - app_network
 
@@ -44,8 +44,6 @@ services:
     container_name: paintings_frontend
     ports:
       - "4000:80"  # 4000 is the host port, 80 is the port inside the NGINX container
-    environment:
-      - REACT_APP_API_URL=http://backend:8080  # Specify the API URL for the frontend
     depends_on:
       - backend
     networks:

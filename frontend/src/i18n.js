@@ -2,7 +2,7 @@ import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import HttpApi from 'i18next-http-backend';
 
-const isProd = process.env.REACT_APP_ENV === 'prod';
+const isProd = import.meta.env.MODE === 'production';
 
 console.log(`Using ${isProd ? 'S3' : 'local'} translations.`);
 

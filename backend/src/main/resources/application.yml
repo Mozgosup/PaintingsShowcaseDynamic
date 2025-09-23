@@ -7,22 +7,43 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
   datasource: # PostgreSQL configuration
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/paintings_db}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://127.0.0.1:5433/paintings_db}
     username: ${SPRING_DATASOURCE_USERNAME:postgres}
-    password: ${SPRING_DATASOURCE_PASSWORD:1234}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
   jpa: # Hibernate configuration
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: none
+  flyway: # Flyway configuration
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
 
 aws: # Amazon S3 configuration
   s3:
     bucket-name: paintingsbucket-mozgosup
     region: ${AWS_REGION:eu-north-1}
 
-flyway: # Flyway configuration
-  enabled: true
-  locations: classpath:db/migration
-  baseline-on-migrate: true
+---
+spring: # Profile: dev  (backend on host, DB in Docker published to host)
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5433/paintings_db
+    username: postgres
+    password: postgres
+  devtools:
+    add-properties: true
+
+---
+spring: # Profile: docker
+  config:
+    activate:
+      on-profile: docker
+  datasource:
+    url: jdbc:postgresql://postgres:5432/paintings_db
+    username: postgres
+    password: postgres
