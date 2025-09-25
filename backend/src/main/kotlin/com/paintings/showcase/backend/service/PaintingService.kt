@@ -14,4 +14,6 @@ interface PaintingService {
     fun deletePainting(id: Long): Boolean
     fun getAllView(language: Language): List<PaintingViewDTO>
     fun getViewById(id: Long, language: Language): PaintingViewDTO?
+    fun getBySlug(slug: String): Painting?
+    fun getViewBySlug(slug: String, language: Language): PaintingViewDTO?
 }

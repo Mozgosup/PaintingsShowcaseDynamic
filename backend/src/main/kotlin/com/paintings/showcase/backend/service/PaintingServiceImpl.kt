@@ -21,6 +21,9 @@ class PaintingServiceImpl(
     override fun createPainting(dto: NewPaintingDTO): Painting {
         val fileUrl = fileStorageService.uploadFile(dto.file)
         val painting = paintingMapper.toEntity(dto, fileUrl)
+        painting.slug = generateUniqueSlug(
+            baseName = dto.nameEn.ifBlank { null } ?: dto.nameRu.ifBlank { null },
+        )
         return paintingRepository.save(painting)
     }
 
@@ -78,5 +81,29 @@ class PaintingServiceImpl(
     override fun getViewById(id: Long, language: Language): PaintingViewDTO? {
         val painting = paintingRepository.findByIdAndLanguage(id, language).orElse(null) ?: return null
         return paintingMapper.toViewDTO(painting, language)
+    }
+
+    override fun getBySlug(slug: String): Painting? =
+        paintingRepository.findBySlug(slug).orElse(null)
+
+    override fun getViewBySlug(slug: String, language: Language): PaintingViewDTO? {
+        val painting = getBySlug(slug) ?: return null
+        return paintingMapper.toViewDTO(painting, language)
+    }
+
+    private fun asciiSlugBase(name: String?): String =
+        (name ?: "p")
+            .lowercase()
+            .replace(Regex("[^a-z0-9]+"), "-")
+            .trim('-')
+            .ifBlank { "p" }
+
+    private fun generateUniqueSlug(baseName: String?): String {
+        var candidate = asciiSlugBase(baseName)
+        while (paintingRepository.existsBySlug(candidate)) {
+            val suffix = java.util.UUID.randomUUID().toString().substring(0, 4)
+            candidate = "$candidate-$suffix"
+        }
+        return candidate
     }
 }

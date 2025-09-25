@@ -14,6 +14,9 @@ data class Painting(
 
     var imageUrl: String,
 
+    @Column(nullable = false, unique = true)
+    var slug: String,
+
     @OneToMany(mappedBy = "painting", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
     val translations: MutableList<PaintingTranslation> = mutableListOf()
 )

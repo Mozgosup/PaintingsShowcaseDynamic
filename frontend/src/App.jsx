@@ -4,11 +4,12 @@ import {useTranslation} from 'react-i18next';
 import Header from './components/Header';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
-import MainContent from './components/MainContent';
 import Biography from './components/Biography';
 import './App.css';
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import Contact from "./components/Contact";
+import Gallery from "./components/Gallery";
+import ArtworkModalRoute from "./components/ArtworkModalRoute";
 
 function App() {
 
@@ -24,20 +25,22 @@ function App() {
                 <Header/>
                 <main id="container">
                     <aside id="menu">
-                        <Navigation />
+                        <Navigation/>
                     </aside>
 
-                    <div className="menu-separator" aria-hidden="true" />
+                    <div className="menu-separator" aria-hidden="true"/>
 
                     <section id="content">
                         <div className="lang-switcher-container">
-                            <LanguageSwitcher />
+                            <LanguageSwitcher/>
                         </div>
 
                         <Routes>
-                            <Route path="/" element={<MainContent />} />
-                            <Route path="/about" element={<Biography />} />
-                            <Route path="/contact" element={<Contact />} />
+                            <Route path="/" element={<Gallery/>}>
+                                <Route path=":slug" element={<ArtworkModalRoute/>}/>
+                            </Route>
+                            <Route path="/about" element={<Biography/>}/>
+                            <Route path="/contact" element={<Contact/>}/>
                         </Routes>
                     </section>
                 </main>

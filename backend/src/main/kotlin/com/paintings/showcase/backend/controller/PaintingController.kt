@@ -63,6 +63,16 @@ class PaintingController @Autowired constructor(
         return painting?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
     }
 
+    @GetMapping("/slug/{slug}")
+    fun getPaintingBySlug(
+        @PathVariable slug: String,
+        @RequestParam(defaultValue = "EN") language: Language
+    ): ResponseEntity<PaintingViewDTO> {
+        val serviceImpl = paintingService
+        val view = serviceImpl.getViewBySlug(slug, language)
+        return view?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+    }
+
     @PutMapping("/{id}")
     fun updatePainting(
         @PathVariable id: Long,

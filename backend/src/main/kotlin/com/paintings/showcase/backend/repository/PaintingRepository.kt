@@ -31,4 +31,7 @@ interface PaintingRepository : JpaRepository<Painting, Long> {
         @Param("id") id: Long,
         @Param("language") language: Language
     ): Optional<Painting>
+
+    fun findBySlug(slug: String): Optional<Painting>
+    fun existsBySlug(slug: String): Boolean
 }

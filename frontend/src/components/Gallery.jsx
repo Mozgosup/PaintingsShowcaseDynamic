@@ -1,27 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
+import {useTranslation} from 'react-i18next';
 import Artwork from './Artwork';
-import ImageModal from './ImageModal';
-import { usePaintings } from '../hooks/usePaintings';
+import {Link, Outlet, useLocation} from 'react-router-dom';
+import {usePaintings} from '../hooks/usePaintings';
 
 function Gallery() {
-    const [selectedPainting, setSelectedPainting] = useState(null);
-    const { data: paintings, loading, error } = usePaintings();
-
-    const openModal = (painting) => setSelectedPainting(painting);
-    const closeModal = () => setSelectedPainting(null);
+    const {data: paintings, loading, error} = usePaintings();
+    const location = useLocation();
+    const {t} = useTranslation();
 
     if (loading) return <div>Loading…</div>;
-    if (error)   return <div>Failed to load</div>;
+    if (error) return <div>Failed to load</div>;
     if (!paintings?.length) return <div>No paintings yet</div>;
 
     return (
-        <div>
+        <div className="page-container">
+            <h1 className="gallery-title">{t('main.featured_artworks')}</h1>
+
             <div id="gallery">
                 {paintings.map((p) => (
-                    <Artwork key={p.id} painting={p} openModal={openModal} />
+                    <Link
+                        key={p.id}
+                        to={`/${p.slug}`}
+                        state={{backgroundLocation: location, fromSlug: p.slug}}
+                        id={`art-${p.slug}`}
+                        className="artwork-link"
+                        title={p.name}
+                        style={{textDecoration: 'none', color: 'inherit'}}
+                    >
+                        <Artwork painting={p}/>
+                    </Link>
                 ))}
             </div>
-            <ImageModal painting={selectedPainting} onClose={closeModal} />
+
+            <Outlet/>
         </div>
     );
 }

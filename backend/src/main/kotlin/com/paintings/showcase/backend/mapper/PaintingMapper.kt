@@ -15,7 +15,8 @@ class PaintingMapper {
             year = dto.year,
             height = dto.height,
             width = dto.width,
-            imageUrl = imageUrl
+            imageUrl = imageUrl,
+            slug = ""
         )
 
         val translations = listOf(
@@ -40,6 +41,7 @@ class PaintingMapper {
         val name = resolveNameWithFallback(painting, language)
         return PaintingViewDTO(
             id = painting.id,
+            slug = painting.slug,
             name = name,
             year = painting.year,
             height = painting.height,
